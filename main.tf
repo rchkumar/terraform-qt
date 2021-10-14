@@ -17,7 +17,7 @@ resource "aws_subnet" "subnets" {
   cidr_block = cidrsubnet(var.vpccidr,8,count.index )
   availability_zone = "${var.region}${count.index%2 == 0?"a":"b"}"
   tags = {
-    "Name" = var.subnets[count.index]
+    "Name" = local.subnets[count.index]
 
   }
 

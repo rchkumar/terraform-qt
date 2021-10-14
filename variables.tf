@@ -7,9 +7,11 @@ variable "region" {
 variable "vpccidr" {
   type = string
   default = "192.168.0.0/16"
+  description = "cidr range of the vpc"
 
 }
 
+/*
 variable "subnets" {
 
   type = list(string)
@@ -17,7 +19,7 @@ variable "subnets" {
   description = "Name of subnets"
 
 }
-
+*/
 /*
 
 variable "subnetazs" {

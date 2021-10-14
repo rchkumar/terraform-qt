@@ -1,5 +1,5 @@
 
-resource "aws_vpc" "automation-vpc" {
+resource "aws_vpc" "ntiervpc" {
   cidr_block = var.vpccidr
   enable_dns_support = true
   enable_dns_hostnames = true
@@ -8,22 +8,23 @@ resource "aws_vpc" "automation-vpc" {
   }
 
 }
-resource "aws_subnet" "web1" {
-  cidr_block = "192.168.0.0/24"
-  vpc_id     = aws_vpc.automation-vpc.id
+
+# lets create all subnets
+
+resource "aws_subnet" "subnets" {
+  count = 6
+  vpc_id     = aws_vpc.ntiervpc.id
+  cidr_block = var.cidrranges[count.index]
+  availability_zone = var.subnetazs[count.index]
   tags = {
-    "Name" = "web1"
+    "Name" = var.subnets[count.index]
 
   }
-  availability_zone = "us-east-1a"
+
+  depends_on = [
+    aws_vpc.ntiervpc
+  ]
+
 }
 
-resource "aws_subnet" "web2" {
-  cidr_block = "192.168.3.0/24"
-  vpc_id     = aws_vpc.automation-vpc.id
-  tags = {
-    "Name" = "web2"
 
-  }
-  availability_zone = "us-east-1c"
-}
